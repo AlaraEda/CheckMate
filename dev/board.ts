@@ -19,9 +19,9 @@ class Board {
             Board.instance = new Board();
 
             //Create board
-            for (let i = 0; i < Board.getInstance().getSize(); i++) {               //Loop word 8x gedaan, vanwege board_size.              
-                for (let j = 0; j < Board.getInstance().getSize(); j++) {
-                    let t:Tile = new Tile((i + j)%2==0 ?  "#ffffff" : "#000000");       //Tile is zwart en wit. 
+            for (let i = 0; i < Board.getInstance().getSize(); i++) {                   //Loop word 8x gedaan, vanwege board_size.              
+                for (let j = 0; j < Board.getInstance().getSize(); j++) {               //Loop word 8x gedaan, vanwege board_size.
+                    let t:Tile = new Tile((i + j)%2==0 ?  "#ffffff" : "#000000");       //Tile is zwart en wit. Tile Creatie.  
                     t.initPosition([i, j]);
                     t.update();
                 }
@@ -55,7 +55,7 @@ class Board {
         return [Math.floor(screenPos[0] / this.tileSize), Math.floor(screenPos[1] / this.tileSize)];
     }
     
-    // check if two positions are the same
+    //Check of positie die je aangeklikt hebt hetzelfde is als een legale move die je mag maken. 
     public static samePosition(a:[number, number], b:[number, number]): boolean {
         return (a[0] == b[0]) && (a[1] == b[1]);
     }

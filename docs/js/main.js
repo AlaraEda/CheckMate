@@ -168,11 +168,12 @@ class Game {
             let legalMoves = this.king.getMoves();
             for (let m of legalMoves) {
                 if (Board.samePosition(m, boardPos)) {
-                    console.log("legal move");
+                    console.log("Legal move");
                     this.king.setPosition(boardPos);
                     this.gameState.kingPos = boardPos;
                     this.playerTurn = false;
                     if (this.gameState.getScore()[1]) {
+                        console.log("Ik heb gewonnen!");
                         this.gameOver = true;
                     }
                 }
@@ -191,6 +192,8 @@ class Game {
             GameAI.moveKnight(this.king, this.knights, this.gameState);
             this.playerTurn = true;
             if (this.gameState.getScore()[1]) {
+                console.log("Paard heeft gewonnen");
+                requestAnimationFrame(() => this.gameLoop());
                 this.gameOver = true;
             }
         }
@@ -223,12 +226,12 @@ class GameAI {
         console.log(king);
         let i = Math.floor(Math.random() * Math.floor(knights.length));
         let legalMoves = knights[i].getMoves();
-        console.log(legalMoves);
+        console.log("Dit is Ai... " + legalMoves);
         let j = Math.floor(Math.random() * Math.floor(legalMoves.length));
         knights[i].setPosition(legalMoves[j]);
         gameState.knightPositions[i] = legalMoves[j];
         let t1 = performance.now();
-        console.log("AI move took " + (t1 - t0) + " milliseconds.");
+        console.log("AI took: " + (t1 - t0) + " milliseconds to move.");
     }
 }
 class King extends ChessPiece {

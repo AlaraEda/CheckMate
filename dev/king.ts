@@ -4,6 +4,7 @@
 
 class King extends ChessPiece  {
 
+    //Alle legale bewegingen die je als King mag maken. 
     public getMoves(from:[number, number] = this.boardPosition): [number, number][] {
         let moves: [number, number][] = []
 

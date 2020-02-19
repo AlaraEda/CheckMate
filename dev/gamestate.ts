@@ -1,6 +1,6 @@
 class GameState {
-    public kingPos: [number, number];               // position of the king in the game in board coordinates
-    public knightPositions: [number, number][];     // position of the knights in the game in board coordinates
+    public kingPos: [number, number];               //Position of the king in the game in board coordinates
+    public knightPositions: [number, number][];     //Position of the knights in the game in board coordinates
 
     constructor(kingPos: [number, number], knightPositions: [number, number][]) {
         this.kingPos = kingPos;
@@ -10,14 +10,14 @@ class GameState {
     // return the value of the state and if the state is terminal (game over)
     // higher value is better gamestate for the king (100 is win, -100 is lose)
     public getScore() : [number, boolean] {
-        // game over
+        //Game over als King & Paard op dezelfde positie staan. 
         for (let z of this.knightPositions) {
             if (Board.samePosition(z, this.kingPos)) {
                 return [-100, true];
             }
         }
 
-        // win
+        //Win
         if (this.kingPos[1] == 0) {
             return[100, true];
         } 

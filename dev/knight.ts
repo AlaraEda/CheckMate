@@ -3,6 +3,7 @@
 
 class Knight extends ChessPiece {
 
+    //Alle legale moves die je als paard mag maken.
     public getMoves(from:[number, number] = this.boardPosition): [number, number][] {
         let moves: [number, number][] = []
 
