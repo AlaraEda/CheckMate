@@ -7,17 +7,17 @@ class Game {
     
     private king:King;                      // the king (=player)
     private knights: Knight[] = [];         // list of knights in the game (=computer/AI)
-    private gameOver:boolean = false;
-    private gameState:GameState;            // current gameState (=position of king and knights)
+    private gameState:GameState;            // Current gameState (=position of king and knights)
 
     private readonly KNIGHTS: number = 3;   // number of knights
 
+    private gameOver:boolean = false;       //Doet nog niks. 
     private playerTurn:boolean = true;      // player has first turn 
  
     constructor() {
-        Board.getInstance(); // init board
+        Board.getInstance(); //init board/Create bord
 
-        // create king for the player and put on middle of bottom row
+        //Create king for the player and put on middle of bottom row
         this.king = new King();
         this.king.initPosition([Math.floor(Board.getInstance().getSize() / 2), Board.getInstance().getSize() - 1])
   
@@ -69,11 +69,13 @@ class Game {
         }
 
         // only respond to input during player turn when no knights are moving, and not game over
+        // If it is player turn and the knights are not moving and the game isn't over
+        //#If it is your turn
         if ((this.playerTurn) && (!moving) && (!this.gameOver)) {
-            console.log(boardPos);
-            let legalMoves: [number, number][] = this.king.getMoves();
+            //console.log(boardPos);
+            let legalMoves: [number, number][] = this.king.getMoves();      //Array of moves I'm allowed to make. 
 
-            // check if requested move is a legal move
+            //Check if requested move is a legal move
             for(let m of legalMoves) {
                 if (Board.samePosition(m, boardPos)) {
                     console.log("legal move");
@@ -83,12 +85,12 @@ class Game {
 
                     // check win
                     if (this.gameState.getScore()[1]) {
-                        this.gameOver = true;
+                        this.gameOver = true;                   //Doet nog niks
                     }
                 }
             }
         } else {
-            console.log("Not player turn, yet");
+            console.log("Not player turn, yet");               //Als je hebt gewonnen. 
         }
     }
     
@@ -98,25 +100,25 @@ class Game {
         // move king
         this.king.update()
 
-        // move knights
+        // move all knights/AI
         for (let go of this.knights){
             go.update()
-
         }
 
-        // AI needs to make a move if it is not the player's turn
+        // If not playerTurn, AI makes a move
         if (!this.playerTurn) {
             
-            GameAI.moveKnight(this.king, this.knights, this.gameState);
-            this.playerTurn = true;
+            GameAI.moveKnight(this.king, this.knights, this.gameState);     //Knight move. 
+            this.playerTurn = true;                                         //Player can now play. 
 
-            // check lose
+            // Als koning wint
             if (this.gameState.getScore()[1]) {
-                this.gameOver = true;
+                this.gameOver = true;                                       //End Game. 
+                //requestAnimationFrame(() => this.gameLoop());
             }
         }
 
-        // restart gameloop
+        // Restart gameloop
         requestAnimationFrame(() => this.gameLoop());
     }
 } 

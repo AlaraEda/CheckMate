@@ -71,7 +71,6 @@ window.customElements.define("tile-component", Tile);
 class Board {
     constructor() {
         this.BOARD_SIZE = 8;
-        this.tileSize = 100;
         let smallestSide = Math.min(window.innerWidth, window.innerHeight);
         this.tileSize = Math.floor(smallestSide / this.BOARD_SIZE);
     }
@@ -131,8 +130,8 @@ class GameState {
 class Game {
     constructor() {
         this.knights = [];
-        this.gameOver = false;
         this.KNIGHTS = 3;
+        this.gameOver = false;
         this.playerTurn = true;
         Board.getInstance();
         this.king = new King();
@@ -166,7 +165,6 @@ class Game {
             }
         }
         if ((this.playerTurn) && (!moving) && (!this.gameOver)) {
-            console.log(boardPos);
             let legalMoves = this.king.getMoves();
             for (let m of legalMoves) {
                 if (Board.samePosition(m, boardPos)) {
