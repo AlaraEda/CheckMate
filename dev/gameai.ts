@@ -25,6 +25,7 @@ class GameAI {
         let j:number =  Math.floor(Math.random() * Math.floor(legalMoves.length));      //Aantal legale moves die de ene knight mag maken. 
 
         //Knight nummerI doet move nummerJ
+        //Knight & Gamestate are updated
         knights[i].setPosition(legalMoves[j]);
         gameState.knightPositions[i] = legalMoves[j];
 
@@ -32,6 +33,29 @@ class GameAI {
 
         let t1 = performance.now();             //AI eind beslissing Timer
         console.log("AI took: " + (t1 - t0) + " milliseconds to move.");
+
+        /*
+        function minimax(position, depth, maximizingPlayer) //Current position, depth (how many moves ahead thinking), 
+            //Geen speelbare posities meer of game over;
+            if depth == 0 or game over
+                return static evaluation of position        //Return made choice;
+
+            //White/AI turn to move
+            if maximizingPlayer (==true)
+                maxEval = -infinity                         //Hoogste aantal haalbare punte
+                for each child of position                  //Loop door alle mogelijke opties die wit heeft
+                    eval = minimax(child, depth - 1, false) //Zelfde functie her oproepen, waarin je doet alsof de gekozen child de current position is, maak het false, want dan geef je aan dat het beurt is aan de zwarte.
+                    maxEval = max(maxEval, eval)            //Onderzoek wat groter is, de hoogst haalbare punten of je gekozen optie
+                return maxEval                              //Geef terug wat het hoogst haalbare punt is.
+            
+            //Zwart's optie om te spelen
+            else
+                minEval = +infinity
+                for each child of position
+                    eval = minimax(child, depth -1, true)
+                    minEval = min(minEval, eval)           //Onderzoek waarbij zwart het minste verlies maakt
+                return minEval                             //Minste verlies optie van zwart/de mens
+        */
 
     }
 

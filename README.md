@@ -8,3 +8,5 @@ Lees de lesbrief voor verdere instructies.
 CTRL + SHIFT + B
 Kies "tsc build" of "tsc watch"
 Zet ook de life server aan.
+
+"Succes is chess. If you act move by move you're playing the wrong game." - MehcadBrooks
