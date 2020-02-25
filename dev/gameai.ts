@@ -42,7 +42,7 @@ class GameAI {
 
             //White/AI turn to move
             if maximizingPlayer (==true)
-                maxEval = -infinity                         //Hoogste aantal haalbare punte
+                maxEval = -infinity                         //Slechts haalbare score
                 for each child of position                  //Loop door alle mogelijke opties die wit heeft
                     eval = minimax(child, depth - 1, false) //Zelfde functie her oproepen, waarin je doet alsof de gekozen child de current position is, maak het false, want dan geef je aan dat het beurt is aan de zwarte.
                     maxEval = max(maxEval, eval)            //Onderzoek wat groter is, de hoogst haalbare punten of je gekozen optie
@@ -50,7 +50,7 @@ class GameAI {
             
             //Zwart's optie om te spelen
             else
-                minEval = +infinity
+                minEval = +infinity                         //Begint met de slechts haalbare scoor. (Hoe meer punten zwart heeft, hoe meer verlies die leid. )
                 for each child of position
                     eval = minimax(child, depth -1, true)
                     minEval = min(minEval, eval)           //Onderzoek waarbij zwart het minste verlies maakt
