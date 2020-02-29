@@ -235,7 +235,7 @@ class GameAI {
     }
     miniMax(positions, depth, maximizingPlayer) {
         let legalMoves = this.knights[this.knights.length].getMoves();
-        console.log(legalMoves);
+        console.log("Word dit gelezen?:" + legalMoves);
         if (depth == 0) {
             console.log("Dept is zero now");
             console.log(positions, depth, maximizingPlayer);
@@ -245,16 +245,13 @@ class GameAI {
             let maxEval = -Infinity;
             let move;
             for (move of positions.knightPositions) {
-                eval = this.miniMax(positions.knightPositions[move], depth - 1, false);
-                maxEval = Math.max(maxEval, eval);
+                console.log("Work it");
             }
             return maxEval;
         }
         else {
             let minEval = Infinity;
             for (let i = 0; i < 3; i++) {
-                eval = this.miniMax(position, depth - 1, true);
-                minEval = Math.min(minEval, eval);
                 return minEval;
             }
         }

@@ -26,7 +26,7 @@ class GameAI {
     private miniMax(positions:GameState, depth: number, maximizingPlayer: boolean) {
         let legalMoves: [number, number][] = this.knights[this.knights.length].getMoves();
 
-        console.log(legalMoves);
+        console.log("Word dit gelezen?:" + legalMoves);
 
         if (depth == 0) {                                                           //Add GameOver?
             console.log("Dept is zero now");
@@ -38,20 +38,21 @@ class GameAI {
             let maxEval = -Infinity;
             let move: [number, number];
             for(move of positions.knightPositions){                                 //Kijk per knight welke posities hij allemaal kan.    
-                eval = this.miniMax(positions.knightPositions[move], depth -1, false)
-                maxEval = Math.max(maxEval, eval);
+                console.log("Work it")
+                // eval = this.miniMax(positions, depth -1, false)
+                // maxEval = Math.max(maxEval, eval);
             }
             return maxEval;
 
         } else {                                                                    //HumanPlayer
             let minEval = Infinity;
             for (let i=0; i<3; i++){                                                //Ga door alle legal moves van King heen.
-                eval = this.miniMax(position, depth -1, true);
-                minEval = Math.min(minEval, eval);
+                // eval = this.miniMax(position, depth -1, true);
+                // minEval = Math.min(minEval, eval);
             return minEval;
             }
         }
-
+    }
     //     /*
     //     function minimax(position, depth, maximizingPlayer) //Current position, depth (how many moves ahead thinking), 
     //         //Geen speelbare posities meer of game over;

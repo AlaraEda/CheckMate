@@ -39,7 +39,7 @@ class Game {
         
         // King & Paarden worden op bord neergezet. Het spel kan beginnen. 
         this.gameState = new GameState(this.king.boardPosition, knightPos);
-
+                
         //Koning verplaatsen
         window.addEventListener("click", (e:MouseEvent) => this.onWindowClick(e))
         window.addEventListener("touchend", (e) => this.onTouchStart(e as TouchEvent))
