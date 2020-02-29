@@ -37,7 +37,7 @@ class Game {
         !!! when positions are updated, both the gameState and the gameObject should be updated !!!
         */
         
-        // King & Paarden woorden op bord neergezet. Het spel kan beginnen. 
+        // King & Paarden worden op bord neergezet. Het spel kan beginnen. 
         this.gameState = new GameState(this.king.boardPosition, knightPos);
 
         //Koning verplaatsen

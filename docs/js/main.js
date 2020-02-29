@@ -236,7 +236,7 @@ class GameAI {
     miniMax(positions, depth, maximizingPlayer) {
         let legalMoves = this.knights[this.knights.length].getMoves();
         console.log(legalMoves);
-        if (depth === 0) {
+        if (depth == 0) {
             console.log("Dept is zero now");
             console.log(positions, depth, maximizingPlayer);
             return positions;
@@ -244,19 +244,20 @@ class GameAI {
         if (maximizingPlayer) {
             let maxEval = -Infinity;
             let move;
-            for (move of positions.knightPositions[1]) { }
-            eval = this.miniMax(move, depth - 1, false);
-            maxEval = Math.max(maxEval, eval);
+            for (move of positions.knightPositions) {
+                eval = this.miniMax(positions.knightPositions[move], depth - 1, false);
+                maxEval = Math.max(maxEval, eval);
+            }
+            return maxEval;
         }
-        return maxEval;
-    }
-}
-{
-    let minEval = Infinity;
-    for (let i = 0; i < 3; i++) {
-        eval = this.miniMax(position, depth - 1, true);
-        minEval = Math.min(minEval, eval);
-        return minEval;
+        else {
+            let minEval = Infinity;
+            for (let i = 0; i < 3; i++) {
+                eval = this.miniMax(position, depth - 1, true);
+                minEval = Math.min(minEval, eval);
+                return minEval;
+            }
+        }
     }
 }
 class King extends ChessPiece {

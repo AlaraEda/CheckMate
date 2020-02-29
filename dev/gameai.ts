@@ -28,18 +28,17 @@ class GameAI {
 
         console.log(legalMoves);
 
-        if (depth === 0) {
+        if (depth == 0) {                                                           //Add GameOver?
             console.log("Dept is zero now");
             console.log(positions, depth, maximizingPlayer);
             return positions;
         }
     
-
         if (maximizingPlayer){                                                      //AIPlayer
             let maxEval = -Infinity;
             let move: [number, number];
-            for(move of positions.knightPositions[1]){}                            //Kijk per knight welke posities hij allemaal kan.    
-            eval = this.miniMax(move, depth -1, false)
+            for(move of positions.knightPositions){                                 //Kijk per knight welke posities hij allemaal kan.    
+                eval = this.miniMax(positions.knightPositions[move], depth -1, false)
                 maxEval = Math.max(maxEval, eval);
             }
             return maxEval;
