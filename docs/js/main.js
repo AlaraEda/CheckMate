@@ -130,7 +130,7 @@ class GameState {
 class Game {
     constructor() {
         this.knights = [];
-        this.KNIGHTS = 3;
+        this.KNIGHTS = 1;
         this.gameOver = false;
         this.playerTurn = true;
         Board.getInstance();
@@ -189,7 +189,7 @@ class Game {
             go.update();
         }
         if (!this.playerTurn) {
-            GameAI.moveKnight(this.king, this.knights, this.gameState);
+            new GameAI(this.king, this.knights, this.gameState);
             this.playerTurn = true;
             if (this.gameState.getScore()[1]) {
                 console.log("Paard heeft gewonnen");
@@ -221,17 +221,42 @@ class Knight extends ChessPiece {
 }
 window.customElements.define("knight-component", Knight);
 class GameAI {
-    static moveKnight(king, knights, gameState) {
-        let t0 = performance.now();
+    constructor(king, knights, gameState) {
+        this.knights = [];
         console.log(king);
+        console.log(knights);
+        console.log(gameState);
         let i = Math.floor(Math.random() * Math.floor(knights.length));
         let legalMoves = knights[i].getMoves();
-        console.log("Dit is Ai... " + legalMoves);
         let j = Math.floor(Math.random() * Math.floor(legalMoves.length));
         knights[i].setPosition(legalMoves[j]);
         gameState.knightPositions[i] = legalMoves[j];
-        let t1 = performance.now();
-        console.log("AI took: " + (t1 - t0) + " milliseconds to move.");
+        this.miniMax(gameState, 2, true);
+    }
+    miniMax(positions, depth, maximizingPlayer) {
+        let legalMoves = this.knights[this.knights.length].getMoves();
+        console.log(legalMoves);
+        if (depth === 0) {
+            console.log("Dept is zero now");
+            console.log(positions, depth, maximizingPlayer);
+            return positions;
+        }
+        if (maximizingPlayer) {
+            let maxEval = -Infinity;
+            let move;
+            for (move of positions.knightPositions[1]) { }
+            eval = this.miniMax(move, depth - 1, false);
+            maxEval = Math.max(maxEval, eval);
+        }
+        return maxEval;
+    }
+}
+{
+    let minEval = Infinity;
+    for (let i = 0; i < 3; i++) {
+        eval = this.miniMax(position, depth - 1, true);
+        minEval = Math.min(minEval, eval);
+        return minEval;
     }
 }
 class King extends ChessPiece {

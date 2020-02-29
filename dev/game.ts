@@ -9,10 +9,10 @@ class Game {
     private knights: Knight[] = [];         // list of knights in the game (=computer/AI)
     private gameState:GameState;            // Current gameState (=position of king and knights)
 
-    private readonly KNIGHTS: number = 3;   // number of knights
+    private readonly KNIGHTS: number = 1;   // number of knights 3
 
-    private gameOver:boolean = false;       //Doet nog niks. 
-    private playerTurn:boolean = true;      // player has first turn 
+    private gameOver:boolean = false;       // Doet nog niks. 
+    private playerTurn:boolean = true;      // Player has first turn 
  
     constructor() {
         //Create board
@@ -111,7 +111,8 @@ class Game {
         // If not playerTurn, AI makes a move
         if (!this.playerTurn) {
             
-            GameAI.moveKnight(this.king, this.knights, this.gameState);     //Knight move. 
+            new GameAI(this.king, this.knights, this.gameState);
+            //GameAI.moveKnight(this.king, this.knights, this.gameState);     //Knight move. 
             this.playerTurn = true;                                         //Player can now play. 
 
             //Als Paard wint

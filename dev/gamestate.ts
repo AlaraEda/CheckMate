@@ -30,9 +30,9 @@ class GameState {
     }
 
     // create a copy of the gamestate (needed by AI to look into the future)
+    //Dit word nog niet uitgevoerd???
     public copy() : GameState {
         const knightPosCopy  = Object.assign([], this.knightPositions);
-
         return new GameState(this.kingPos, knightPosCopy)
     }
 }
