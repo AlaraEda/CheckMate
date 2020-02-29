@@ -70,7 +70,7 @@ class Game {
 
         // only respond to input during player turn when no knights are moving, and not game over
         if ((this.playerTurn) && (!moving) && (!this.gameOver)) {
-            console.log(boardPos);
+            console.log("BoardPos of King:" + boardPos);
             let legalMoves: [number, number][] = this.king.getMoves();
 
             // check if requested move is a legal move

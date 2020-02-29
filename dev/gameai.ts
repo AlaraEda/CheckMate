@@ -11,14 +11,14 @@ class GameAI {
 
         // RANDOM MOVE - START ------------------
 
-        console.log(king); // only to avoid error: 'king' is declared but its value is never read.
+        console.log("King:" + king); // only to avoid error: 'king' is declared but its value is never read.
 
         // choose knight to move
         let i:number =  Math.floor(Math.random() * Math.floor(knights.length));
 
         let legalMoves: [number, number][] = knights[i].getMoves();
 
-        console.log(legalMoves);
+        console.log("LegalMoves" + legalMoves);
 
         let j:number =  Math.floor(Math.random() * Math.floor(legalMoves.length));
 
@@ -28,7 +28,7 @@ class GameAI {
         // RANDOM MOVE - END   ------------------
 
         let t1 = performance.now();
-        console.log("AI move took " + (t1 - t0) + " milliseconds.");
+        console.log("AI move took " + (t1 - t0) + " milliseconds to calculate.");
 
     }
 

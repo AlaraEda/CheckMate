@@ -166,7 +166,7 @@ class Game {
             }
         }
         if ((this.playerTurn) && (!moving) && (!this.gameOver)) {
-            console.log(boardPos);
+            console.log("BoardPos of King:" + boardPos);
             let legalMoves = this.king.getMoves();
             for (let m of legalMoves) {
                 if (Board.samePosition(m, boardPos)) {
@@ -222,15 +222,15 @@ window.customElements.define("knight-component", Knight);
 class GameAI {
     static moveKnight(king, knights, gameState) {
         let t0 = performance.now();
-        console.log(king);
+        console.log("King:" + king);
         let i = Math.floor(Math.random() * Math.floor(knights.length));
         let legalMoves = knights[i].getMoves();
-        console.log(legalMoves);
+        console.log("LegalMoves" + legalMoves);
         let j = Math.floor(Math.random() * Math.floor(legalMoves.length));
         knights[i].setPosition(legalMoves[j]);
         gameState.knightPositions[i] = legalMoves[j];
         let t1 = performance.now();
-        console.log("AI move took " + (t1 - t0) + " milliseconds.");
+        console.log("AI move took " + (t1 - t0) + " milliseconds to calculate.");
     }
 }
 class King extends ChessPiece {
