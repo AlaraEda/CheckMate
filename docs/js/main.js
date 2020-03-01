@@ -222,20 +222,13 @@ class Knight extends ChessPiece {
 window.customElements.define("knight-component", Knight);
 class GameAI {
     constructor(king, knights, gameState) {
-        this.knights = [];
         console.log(king);
         console.log(knights);
         console.log(gameState);
-        let i = Math.floor(Math.random() * Math.floor(knights.length));
-        let legalMoves = knights[i].getMoves();
-        let j = Math.floor(Math.random() * Math.floor(legalMoves.length));
-        knights[i].setPosition(legalMoves[j]);
-        gameState.knightPositions[i] = legalMoves[j];
         this.miniMax(gameState, 2, true);
     }
     miniMax(positions, depth, maximizingPlayer) {
-        let legalMoves = this.knights[this.knights.length].getMoves();
-        console.log("Word dit gelezen?:" + legalMoves);
+        console.log("Word dit gelezen?");
         if (depth == 0) {
             console.log("Dept is zero now");
             console.log(positions, depth, maximizingPlayer);
@@ -246,6 +239,7 @@ class GameAI {
             let move;
             for (move of positions.knightPositions) {
                 console.log("Work it");
+                console.log("Dit is move: " + move);
             }
             return maxEval;
         }
