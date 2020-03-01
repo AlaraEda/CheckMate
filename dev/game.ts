@@ -9,7 +9,7 @@ class Game {
     private knights: Knight[] = [];         // list of knights in the game (=computer/AI)
     private gameState:GameState;            // Current gameState (=position of king and knights)
 
-    private readonly KNIGHTS: number = 1;   // number of knights 3
+    private readonly KNIGHTS: number = 3;   // number of knights 3
 
     private gameOver:boolean = false;       // Doet nog niks. 
     private playerTurn:boolean = true;      // Player has first turn 

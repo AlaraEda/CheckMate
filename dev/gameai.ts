@@ -20,39 +20,37 @@ class GameAI {
         // knights[i].setPosition(legalMoves[j]);                                           //Knight nummerI doet move nummerJ, verplaatsing
         // gameState.knightPositions[i] = legalMoves[j];                                    //Knight's position in de gamestate is changed to the decided legal move. //Updaten 
         
-        this.miniMax(gameState, 2, true);                                                //MiniMax oproepen
+        this.miniMax(knights, 2, true);                                                //MiniMax oproepen
     }
 
-    private miniMax(positions:GameState, depth: number, maximizingPlayer: boolean) {
+    private miniMax(knights:Knight[], depth: number, maximizingPlayer: boolean) {
         console.log("Word dit gelezen?");
-        //let legalMoves: [number, number][] = this.knights[this.knights.length].getMoves();
-
-        //console.log("Word dit gelezen?:" + legalMoves);
+        let legalMoves: [number, number][] = knights[0].getMoves();
 
         if (depth == 0) {                                                           //Add GameOver?
             console.log("Dept is zero now");
-            console.log(positions, depth, maximizingPlayer);
-            return positions;
+            console.log(knights, depth, maximizingPlayer);
+            return knights;
         }
     
         if (maximizingPlayer){                                                      //AIPlayer
             let maxEval = -Infinity;
             let move: [number, number];
-            for(move of positions.knightPositions){                                 //Kijk per knight welke posities hij allemaal kan.    
-                console.log("Work it")
+            
+            for(move of legalMoves){                                 //Kijk per knight welke posities hij allemaal kan.    
                 console.log("Dit is move: " + move);
-                // eval = this.miniMax(positions, depth -1, false)
+                // eval = this.miniMax(move, depth -1, false)
                 // maxEval = Math.max(maxEval, eval);
             }
             return maxEval;
 
         } else {                                                                    //HumanPlayer
             let minEval = Infinity;
-            for (let i=0; i<3; i++){                                                //Ga door alle legal moves van King heen.
+            for (let i=0; i<legalMoves.length; i++){                                                //Ga door alle legal moves van King heen.
                 // eval = this.miniMax(position, depth -1, true);
                 // minEval = Math.min(minEval, eval);
-            return minEval;
             }
+            return minEval;
         }
     }
     //     /*

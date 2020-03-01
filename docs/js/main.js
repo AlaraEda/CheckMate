@@ -130,7 +130,7 @@ class GameState {
 class Game {
     constructor() {
         this.knights = [];
-        this.KNIGHTS = 1;
+        this.KNIGHTS = 3;
         this.gameOver = false;
         this.playerTurn = true;
         Board.getInstance();
@@ -225,29 +225,29 @@ class GameAI {
         console.log(king);
         console.log(knights);
         console.log(gameState);
-        this.miniMax(gameState, 2, true);
+        this.miniMax(knights, 2, true);
     }
-    miniMax(positions, depth, maximizingPlayer) {
+    miniMax(knights, depth, maximizingPlayer) {
         console.log("Word dit gelezen?");
+        let legalMoves = knights[0].getMoves();
         if (depth == 0) {
             console.log("Dept is zero now");
-            console.log(positions, depth, maximizingPlayer);
-            return positions;
+            console.log(knights, depth, maximizingPlayer);
+            return knights;
         }
         if (maximizingPlayer) {
             let maxEval = -Infinity;
             let move;
-            for (move of positions.knightPositions) {
-                console.log("Work it");
+            for (move of legalMoves) {
                 console.log("Dit is move: " + move);
             }
             return maxEval;
         }
         else {
             let minEval = Infinity;
-            for (let i = 0; i < 3; i++) {
-                return minEval;
+            for (let i = 0; i < legalMoves.length; i++) {
             }
+            return minEval;
         }
     }
 }
