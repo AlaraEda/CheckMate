@@ -24,28 +24,34 @@ class GameAI {
     }
 
     private miniMax(knights:Knight[], depth: number, maximizingPlayer: boolean) {
-        console.log("Word dit gelezen?");
+        // console.log("Word dit gelezen?");
         let legalMoves: [number, number][] = knights[0].getMoves();
 
         if (depth == 0) {                                                           //Add GameOver?
             console.log("Dept is zero now");
-            console.log(knights, depth, maximizingPlayer);
+            //console.log(knights, depth, maximizingPlayer);
             return knights;
         }
     
         if (maximizingPlayer){                                                      //AIPlayer
             let maxEval = -Infinity;
+
+            //let legalMoves: [number, number][] = knights[0].getMoves();
             let move: [number, number];
             
             for(move of legalMoves){                                 //Kijk per knight welke posities hij allemaal kan.    
-                console.log("Dit is move: " + move);
-                // eval = this.miniMax(move, depth -1, false)
-                // maxEval = Math.max(maxEval, eval);
+                console.log("Dit is move van het paard: " + move);
+               
+                //this.miniMax(move, depth-1, false);
+                
+                //Wat is de score? Vergelijk die met maxEval.
+                //maxEval = Math.max(maxEval, l);
             }
             return maxEval;
 
         } else {                                                                    //HumanPlayer
             let minEval = Infinity;
+            
             for (let i=0; i<legalMoves.length; i++){                                                //Ga door alle legal moves van King heen.
                 // eval = this.miniMax(position, depth -1, true);
                 // minEval = Math.min(minEval, eval);

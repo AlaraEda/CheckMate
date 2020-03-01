@@ -228,18 +228,16 @@ class GameAI {
         this.miniMax(knights, 2, true);
     }
     miniMax(knights, depth, maximizingPlayer) {
-        console.log("Word dit gelezen?");
         let legalMoves = knights[0].getMoves();
         if (depth == 0) {
             console.log("Dept is zero now");
-            console.log(knights, depth, maximizingPlayer);
             return knights;
         }
         if (maximizingPlayer) {
             let maxEval = -Infinity;
             let move;
             for (move of legalMoves) {
-                console.log("Dit is move: " + move);
+                console.log("Dit is move van het paard: " + move);
             }
             return maxEval;
         }
