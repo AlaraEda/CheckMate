@@ -1,15 +1,12 @@
 /// <reference path="knight.ts" />
 
 class GameAI {
-    //private knights: Knight[] = [];         // list of knights in the game (=computer/AI)[
-
     
     constructor(king: King, knights: Knight[], gameState: GameState) {
         console.log(king);
         console.log(knights);
         console.log(gameState);
-
-        
+        //gameStateCopy = gamestate.copy()
         // //Choose knight to move
         // let i:number =  Math.floor(Math.random() * Math.floor(knights.length));         //Aantal Knights to move = max 0,2,1
         
@@ -20,12 +17,12 @@ class GameAI {
         // knights[i].setPosition(legalMoves[j]);                                           //Knight nummerI doet move nummerJ, verplaatsing
         // gameState.knightPositions[i] = legalMoves[j];                                    //Knight's position in de gamestate is changed to the decided legal move. //Updaten 
         
-        this.miniMax(knights, 2, true);                                                //MiniMax oproepen
+        this.miniMax(knights, king, 2, true);                                                //MiniMax oproepen, king
     }
 
-    private miniMax(knights:Knight[], depth: number, maximizingPlayer: boolean) {
+    private miniMax(knights:Knight[], king, King, depth: number, maximizingPlayer: boolean) { //king
         // console.log("Word dit gelezen?");
-        let legalMoves: [number, number][] = knights[0].getMoves();
+        let legalMoves: [number, number][] = knights[0].getMoves();                 //
 
         if (depth == 0) {                                                           //Add GameOver?
             console.log("Dept is zero now");
