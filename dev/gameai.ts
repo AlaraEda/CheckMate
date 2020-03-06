@@ -1,6 +1,13 @@
 /// <reference path="knight.ts" />
 
+
+
 class GameAI {
+  
+    public static miniMax(): number{
+        console.log();
+        return 1
+    }
     
     public static bestMove(king: King, knights: Knight[], gameState: GameState){
         console.log(king);
@@ -21,6 +28,7 @@ class GameAI {
             console.log ("Dit is de move van het paard: " + move);
 
             let score = this.miniMax();
+            console.log(this)
             console.log(score);
 
             if (score > bestScore) {
@@ -33,11 +41,11 @@ class GameAI {
             //Is the spot avaialble? 
         }
     }
-
-    public miniMax(){
-        console.log();
-    }
+   
 }
+
+
+
 
 
 
