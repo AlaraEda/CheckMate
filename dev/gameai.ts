@@ -2,10 +2,31 @@
 
 class GameAI {
     
-    constructor(king: King, knights: Knight[], gameState: GameState) {
+    public static bestMove(king: King, knights: Knight[], gameState: GameState){
         console.log(king);
         console.log(knights);
         console.log(gameState);
+
+        let gameStateCopy = gameState.copy()
+
+        //Look at all the possible (legal moves) for knight:
+        let legalMovesKing: [number, number][] = king.getMoves(gameStateCopy.kingPos);
+        //let legalMovesKnights: [number, number][]= knights[0].getMoves(gameStateCopy.knightPositions[0]);
+        
+        let bestScore = -Infinity;
+        let legalMoves: [number, number][] = knights[0].getMoves();
+        
+        for (let move of legalMoves){
+            let score = this.miniMax(knights);
+            if (score > bestScore) {
+                bestScore = score;
+            }
+            console.log ("Dit is de move van het paard: " + move);
+            //Is the spot avaialble? 
+        }
+
+       
+
         //gameStateCopy = gamestate.copy()
         // //Choose knight to move
         // let i:number =  Math.floor(Math.random() * Math.floor(knights.length));         //Aantal Knights to move = max 0,2,1
@@ -17,45 +38,53 @@ class GameAI {
         // knights[i].setPosition(legalMoves[j]);                                           //Knight nummerI doet move nummerJ, verplaatsing
         // gameState.knightPositions[i] = legalMoves[j];                                    //Knight's position in de gamestate is changed to the decided legal move. //Updaten 
         
-        this.miniMax(knights, king, 2, true);                                                //MiniMax oproepen, king
+        //this.miniMax(knights, king, 2, true);                                                //MiniMax oproepen, king
     }
 
-    private miniMax(knights:Knight[], king, King, depth: number, maximizingPlayer: boolean) { //king
-        // console.log("Word dit gelezen?");
-        let legalMoves: [number, number][] = knights[0].getMoves();                 //
 
-        if (depth == 0) {                                                           //Add GameOver?
-            console.log("Dept is zero now");
-            //console.log(knights, depth, maximizingPlayer);
-            return knights;
-        }
+    // public miniMax(knights: Knight[]){
+    //     console.log('...');
+    // }
+
+
+
+
+    // private miniMax(knights:Knight[], King, depth: number, maximizingPlayer: boolean) { //king
+    //     // console.log("Word dit gelezen?");
+    //     let legalMoves: [number, number][] = knights[0].getMoves();                 //
+
+    //     if (depth == 0) {                                                           //Add GameOver?
+    //         console.log("Dept is zero now");
+    //         //console.log(knights, depth, maximizingPlayer);
+    //         return knights;
+    //     }
     
-        if (maximizingPlayer){                                                      //AIPlayer
-            let maxEval = -Infinity;
+    //     if (maximizingPlayer){                                                      //AIPlayer
+    //         let maxEval = -Infinity;
 
-            //let legalMoves: [number, number][] = knights[0].getMoves();
-            let move: [number, number];
+    //         //let legalMoves: [number, number][] = knights[0].getMoves();
+    //         let move: [number, number];
             
-            for(move of legalMoves){                                 //Kijk per knight welke posities hij allemaal kan.    
-                console.log("Dit is move van het paard: " + move);
+    //         for(move of legalMoves){                                 //Kijk per knight welke posities hij allemaal kan.    
+    //             console.log("Dit is move van het paard: " + move);
                
-                //this.miniMax(move, depth-1, false);
+    //             //this.miniMax(move, depth-1, false);
                 
-                //Wat is de score? Vergelijk die met maxEval.
-                //maxEval = Math.max(maxEval, l);
-            }
-            return maxEval;
+    //             //Wat is de score? Vergelijk die met maxEval.
+    //             //maxEval = Math.max(maxEval, l);
+    //         }
+    //         return maxEval;
 
-        } else {                                                                    //HumanPlayer
-            let minEval = Infinity;
+    //     } else {                                                                    //HumanPlayer
+    //         let minEval = Infinity;
             
-            for (let i=0; i<legalMoves.length; i++){                                                //Ga door alle legal moves van King heen.
-                // eval = this.miniMax(position, depth -1, true);
-                // minEval = Math.min(minEval, eval);
-            }
-            return minEval;
-        }
-    }
+    //         for (let i=0; i<legalMoves.length; i++){                                                //Ga door alle legal moves van King heen.
+    //             // eval = this.miniMax(position, depth -1, true);
+    //             // minEval = Math.min(minEval, eval);
+    //         }
+    //         return minEval;
+    //     }
+    // }
     //     /*
     //     function minimax(position, depth, maximizingPlayer) //Current position, depth (how many moves ahead thinking), 
     //         //Geen speelbare posities meer of game over;

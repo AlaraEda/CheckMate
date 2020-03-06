@@ -189,7 +189,7 @@ class Game {
             go.update();
         }
         if (!this.playerTurn) {
-            new GameAI(this.king, this.knights, this.gameState);
+            GameAI.bestMove(this.king, this.knights, this.gameState);
             this.playerTurn = true;
             if (this.gameState.getScore()[1]) {
                 console.log("Paard heeft gewonnen");
@@ -221,31 +221,20 @@ class Knight extends ChessPiece {
 }
 window.customElements.define("knight-component", Knight);
 class GameAI {
-    constructor(king, knights, gameState) {
+    static bestMove(king, knights, gameState) {
         console.log(king);
         console.log(knights);
         console.log(gameState);
-        this.miniMax(knights, king, 2, true);
-    }
-    miniMax(knights, king, King, depth, maximizingPlayer) {
+        let gameStateCopy = gameState.copy();
+        let legalMovesKing = king.getMoves(gameStateCopy.kingPos);
+        let bestScore = -Infinity;
         let legalMoves = knights[0].getMoves();
-        if (depth == 0) {
-            console.log("Dept is zero now");
-            return knights;
-        }
-        if (maximizingPlayer) {
-            let maxEval = -Infinity;
-            let move;
-            for (move of legalMoves) {
-                console.log("Dit is move van het paard: " + move);
+        for (let move of legalMoves) {
+            let score = this.miniMax(knights);
+            if (score > bestScore) {
+                bestScore = score;
             }
-            return maxEval;
-        }
-        else {
-            let minEval = Infinity;
-            for (let i = 0; i < legalMoves.length; i++) {
-            }
-            return minEval;
+            console.log("Dit is de move van het paard: " + move);
         }
     }
 }

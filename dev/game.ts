@@ -111,7 +111,8 @@ class Game {
         // If not playerTurn, AI makes a move
         if (!this.playerTurn) {
             
-            new GameAI(this.king, this.knights, this.gameState);
+            GameAI.bestMove(this.king, this.knights, this.gameState);
+            
             //GameAI.moveKnight(this.king, this.knights, this.gameState);     //Knight move. 
             this.playerTurn = true;                                         //Player can now play. 
 
