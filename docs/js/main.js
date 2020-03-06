@@ -221,26 +221,24 @@ class Knight extends ChessPiece {
 }
 window.customElements.define("knight-component", Knight);
 class GameAI {
-    static miniMax() {
-        console.log();
-        return 1;
-    }
     static bestMove(king, knights, gameState) {
         console.log(king);
         console.log(knights);
         console.log(gameState);
+        let gameStateCopy = gameState.copy();
+        let legalMovesKnights = knights[0].getMoves(gameStateCopy.knightPositions[0]);
         let bestScore = -Infinity;
-        let legalMoves = knights[0].getMoves();
-        for (let move of legalMoves) {
+        for (let move of legalMovesKnights) {
             console.log("Dit is de move van het paard: " + move);
             let score = this.miniMax();
-            console.log(this);
-            console.log(score);
             if (score > bestScore) {
                 bestScore = score;
             }
-            console.log("bla");
         }
+    }
+    static miniMax() {
+        console.log();
+        return 1;
     }
 }
 class King extends ChessPiece {

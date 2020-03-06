@@ -3,43 +3,37 @@
 
 
 class GameAI {
-  
-    public static miniMax(): number{
-        console.log();
-        return 1
-    }
     
     public static bestMove(king: King, knights: Knight[], gameState: GameState){
         console.log(king);
         console.log(knights);
         console.log(gameState);
 
-        //let gameStateCopy = gameState.copy()
+        let gameStateCopy = gameState.copy()
 
         //Look at all the possible (legal moves) for knight:
         //let legalMovesKing: [number, number][] = king.getMoves(gameStateCopy.kingPos);
-        //let legalMovesKnights: [number, number][]= knights[0].getMoves(gameStateCopy.knightPositions[0]);
-        
+        let legalMovesKnights: [number, number][]= knights[0].getMoves(gameStateCopy.knightPositions[0]);
         let bestScore = -Infinity;
-        let legalMoves: [number, number][] = knights[0].getMoves();
-        
-        
-        for (let move of legalMoves){
+        //let legalMoves: [number, number][] = knights[0].getMoves();
+                
+        for (let move of legalMovesKnights){
             console.log ("Dit is de move van het paard: " + move);
-
+            
+            //Als de spot available is...
             let score = this.miniMax();
-            console.log(this)
-            console.log(score);
 
             if (score > bestScore) {
                 bestScore = score;
             }
 
-            
-            
-            console.log("bla");
             //Is the spot avaialble? 
         }
+    }
+
+    public static miniMax(): number{
+        console.log();
+        return 1
     }
    
 }
