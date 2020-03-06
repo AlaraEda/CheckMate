@@ -225,17 +225,20 @@ class GameAI {
         console.log(king);
         console.log(knights);
         console.log(gameState);
-        let gameStateCopy = gameState.copy();
-        let legalMovesKing = king.getMoves(gameStateCopy.kingPos);
         let bestScore = -Infinity;
         let legalMoves = knights[0].getMoves();
         for (let move of legalMoves) {
-            let score = this.miniMax(knights);
+            console.log("Dit is de move van het paard: " + move);
+            let score = this.miniMax();
+            console.log(score);
             if (score > bestScore) {
                 bestScore = score;
             }
-            console.log("Dit is de move van het paard: " + move);
+            console.log("bla");
         }
+    }
+    miniMax() {
+        console.log();
     }
 }
 class King extends ChessPiece {
