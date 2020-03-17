@@ -94,7 +94,7 @@ class GameAI {
     //         let minEval = Infinity;
             
     //         for (let i=0; i<legalMoves.length; i++){                                                //Ga door alle legal moves van King heen.
-    //             // eval = this.miniMax(position, depth -1, true);
+    //             // var eval = this.miniMax(position, depth -1, true);
     //             // minEval = Math.min(minEval, eval);
     //         }
     //         return minEval;
