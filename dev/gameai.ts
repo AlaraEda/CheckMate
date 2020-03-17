@@ -11,12 +11,13 @@ class GameAI {
 
         let gameStateCopy = gameState.copy()
 
-        //Look at all the possible (legal moves) for knight:
+        //Look at all the possible (legal moves) for knight & King:
         //let legalMovesKing: [number, number][] = king.getMoves(gameStateCopy.kingPos);
         let legalMovesKnights: [number, number][]= knights[0].getMoves(gameStateCopy.knightPositions[0]);
-        let bestScore = -Infinity;
+        
         //let legalMoves: [number, number][] = knights[0].getMoves();
-                
+
+        let bestScore = -Infinity;     
         for (let move of legalMovesKnights){
             console.log ("Dit is de move van het paard: " + move);
             
@@ -25,6 +26,10 @@ class GameAI {
 
             if (score > bestScore) {
                 bestScore = score;
+                console.log("Dit is de beste score:" + bestScore);              //Antwoord is 1
+
+                // knights[0].setPosition(legalMovesKnights[move]);                                           //Knight nummerI doet move nummerJ, verplaatsing
+                // gameState.knightPositions[0] = legalMovesKnights[move];                                    //Knight's position in de gamestate is changed to the decided legal move. //Updaten 
             }
 
             //Is the spot avaialble? 
@@ -32,7 +37,7 @@ class GameAI {
     }
 
     public static miniMax(): number{
-        console.log();
+        console.log("minimax word opgeroepen");
         return 1
     }
    

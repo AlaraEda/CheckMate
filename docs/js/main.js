@@ -233,11 +233,12 @@ class GameAI {
             let score = this.miniMax();
             if (score > bestScore) {
                 bestScore = score;
+                console.log("Dit is de beste score:" + bestScore);
             }
         }
     }
     static miniMax() {
-        console.log();
+        console.log("minimax word opgeroepen");
         return 1;
     }
 }
