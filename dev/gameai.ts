@@ -7,30 +7,78 @@ class GameAI {
     public static moveKnight(king:King, knights: Knight[], gameState:GameState) {
         let t0 = performance.now();
 
-         // TODO: remove random move, amnd replace with AI move
+        const searchdepth = 3;
+        let minEval = Infinity;
+        let bestMove: [number,number] = [0,0];          //Een array met 2 nummers.
+        let indexKnight = 0;
 
-        // RANDOM MOVE - START ------------------
+        //Voor iedere knight voer je de volgende functie uit
+        knights.forEach((knight, i) => {
+            const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+           
+            KnightlegalMoves.forEach((move)=>{
+                const gamestateCopy = gameState.copy();
+                gamestateCopy.knightPositions[i] = move;
 
-        console.log("King:" + king); // only to avoid error: 'king' is declared but its value is never read.
+                const currentEval = miniMax(gamestateCopy, searchdepth -1, true);
+                //minEval = Math.min(minEval, currentEval);
 
-        // choose knight to move
-        let i:number =  Math.floor(Math.random() * Math.floor(knights.length));
-
-        let legalMoves: [number, number][] = knights[i].getMoves();
-
-        console.log("LegalMoves" + legalMoves);
-
-        let j:number =  Math.floor(Math.random() * Math.floor(legalMoves.length));
-
-        knights[i].setPosition(legalMoves[j]);
-        gameState.knightPositions[i] = legalMoves[j];
-
-        // RANDOM MOVE - END   ------------------
+                if (currentEval < minEval){
+                    minEval = currentEval;
+                    bestMove = move;
+                    indexKnight = i;
+                }
+            })
+        });
+        
+        knights[indexKnight].setPosition(bestMove);
+        //console.log("Dit is de bestmove: ", bestMove, indexKnight);
+        gameState.knightPositions[indexKnight] = bestMove;
 
         let t1 = performance.now();
         console.log("AI move took " + (t1 - t0) + " milliseconds to calculate.");
 
+        function miniMax(gameState: GameState, depth: number, maximizingPlayer: boolean){
+            const score = gameState.getScore();
+            if (depth === 0 || score[1]){                   //Als het 1 is dan loose.
+                return score[0];
+            }
+
+            //Kingzet
+            if (maximizingPlayer){
+                let maxEval = -Infinity;
+
+                const KingLegalMoves = king.getMoves(gameState.kingPos)                     //Want je hebt nog niks veranderd, je wilt de huidige situatie zien. 
+                
+                for (let move of KingLegalMoves){
+                    const gamestateCopy = gameState.copy();
+                    gamestateCopy.kingPos = move;
+
+                    const currentEval = miniMax(gamestateCopy, depth -1, false);
+                    maxEval = Math.max(maxEval, currentEval);
+                }
+
+                return maxEval;
+            }
+
+            else {
+                let minEval = Infinity;
+
+                //Voor iedere knight voer je de volgende functie uit
+                knights.forEach((knight, i) => {
+                    const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+
+                    KnightlegalMoves.forEach((move)=>{
+                        const gamestateCopy = gameState.copy();
+                        gamestateCopy.knightPositions[i] = move;
+
+                        const currentEval = miniMax(gamestateCopy, depth -1, true);
+                        minEval = Math.min(minEval, currentEval);
+                    })
+                });
+                //console.log("Dit is de minEval: ", minEval);
+                return minEval;
+            }
+        }
     }
-
-
 }

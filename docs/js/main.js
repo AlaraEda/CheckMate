@@ -222,15 +222,57 @@ window.customElements.define("knight-component", Knight);
 class GameAI {
     static moveKnight(king, knights, gameState) {
         let t0 = performance.now();
-        console.log("King:" + king);
-        let i = Math.floor(Math.random() * Math.floor(knights.length));
-        let legalMoves = knights[i].getMoves();
-        console.log("LegalMoves" + legalMoves);
-        let j = Math.floor(Math.random() * Math.floor(legalMoves.length));
-        knights[i].setPosition(legalMoves[j]);
-        gameState.knightPositions[i] = legalMoves[j];
+        const searchdepth = 3;
+        let minEval = Infinity;
+        let bestMove = [0, 0];
+        let indexKnight = 0;
+        knights.forEach((knight, i) => {
+            const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+            KnightlegalMoves.forEach((move) => {
+                const gamestateCopy = gameState.copy();
+                gamestateCopy.knightPositions[i] = move;
+                const currentEval = miniMax(gamestateCopy, searchdepth - 1, true);
+                if (currentEval < minEval) {
+                    minEval = currentEval;
+                    bestMove = move;
+                    indexKnight = i;
+                }
+            });
+        });
+        knights[indexKnight].setPosition(bestMove);
+        gameState.knightPositions[indexKnight] = bestMove;
         let t1 = performance.now();
         console.log("AI move took " + (t1 - t0) + " milliseconds to calculate.");
+        function miniMax(gameState, depth, maximizingPlayer) {
+            const score = gameState.getScore();
+            if (depth === 0 || score[1]) {
+                return score[0];
+            }
+            if (maximizingPlayer) {
+                let maxEval = -Infinity;
+                const KingLegalMoves = king.getMoves(gameState.kingPos);
+                for (let move of KingLegalMoves) {
+                    const gamestateCopy = gameState.copy();
+                    gamestateCopy.kingPos = move;
+                    const currentEval = miniMax(gamestateCopy, depth - 1, false);
+                    maxEval = Math.max(maxEval, currentEval);
+                }
+                return maxEval;
+            }
+            else {
+                let minEval = Infinity;
+                knights.forEach((knight, i) => {
+                    const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+                    KnightlegalMoves.forEach((move) => {
+                        const gamestateCopy = gameState.copy();
+                        gamestateCopy.knightPositions[i] = move;
+                        const currentEval = miniMax(gamestateCopy, depth - 1, true);
+                        minEval = Math.min(minEval, currentEval);
+                    });
+                });
+                return minEval;
+            }
+        }
     }
 }
 class King extends ChessPiece {
