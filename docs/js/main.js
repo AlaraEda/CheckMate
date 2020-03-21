@@ -231,7 +231,7 @@ class GameAI {
             KnightlegalMoves.forEach((move) => {
                 const gamestateCopy = gameState.copy();
                 gamestateCopy.knightPositions[i] = move;
-                const currentEval = miniMax(gamestateCopy, searchdepth - 1, true);
+                const currentEval = this.miniMax(gamestateCopy, king, knights, searchdepth - 1, true);
                 if (currentEval < minEval) {
                     minEval = currentEval;
                     bestMove = move;
@@ -243,35 +243,35 @@ class GameAI {
         gameState.knightPositions[indexKnight] = bestMove;
         let t1 = performance.now();
         console.log("AI move took " + (t1 - t0) + " milliseconds to calculate.");
-        function miniMax(gameState, depth, maximizingPlayer) {
-            const score = gameState.getScore();
-            if (depth === 0 || score[1]) {
-                return score[0];
+    }
+    miniMax(gameState, king, knights, depth, maximizingPlayer) {
+        const score = gameState.getScore();
+        if (depth === 0 || score[1]) {
+            return score[0];
+        }
+        if (maximizingPlayer) {
+            let maxEval = -Infinity;
+            const KingLegalMoves = king.getMoves(gameState.kingPos);
+            for (let move of KingLegalMoves) {
+                const gamestateCopy = gameState.copy();
+                gamestateCopy.kingPos = move;
+                const currentEval = this.miniMax(gamestateCopy, king, knights, depth - 1, false);
+                maxEval = Math.max(maxEval, currentEval);
             }
-            if (maximizingPlayer) {
-                let maxEval = -Infinity;
-                const KingLegalMoves = king.getMoves(gameState.kingPos);
-                for (let move of KingLegalMoves) {
+            return maxEval;
+        }
+        else {
+            let minEval = Infinity;
+            knights.forEach((knight, i) => {
+                const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+                KnightlegalMoves.forEach((move) => {
                     const gamestateCopy = gameState.copy();
-                    gamestateCopy.kingPos = move;
-                    const currentEval = miniMax(gamestateCopy, depth - 1, false);
-                    maxEval = Math.max(maxEval, currentEval);
-                }
-                return maxEval;
-            }
-            else {
-                let minEval = Infinity;
-                knights.forEach((knight, i) => {
-                    const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
-                    KnightlegalMoves.forEach((move) => {
-                        const gamestateCopy = gameState.copy();
-                        gamestateCopy.knightPositions[i] = move;
-                        const currentEval = miniMax(gamestateCopy, depth - 1, true);
-                        minEval = Math.min(minEval, currentEval);
-                    });
+                    gamestateCopy.knightPositions[i] = move;
+                    const currentEval = this.miniMax(gamestateCopy, king, knights, depth - 1, true);
+                    minEval = Math.min(minEval, currentEval);
                 });
-                return minEval;
-            }
+            });
+            return minEval;
         }
     }
 }

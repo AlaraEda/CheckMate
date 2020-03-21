@@ -20,8 +20,8 @@ class GameAI {
                 const gamestateCopy = gameState.copy();
                 gamestateCopy.knightPositions[i] = move;
 
-                const currentEval = miniMax(gamestateCopy, searchdepth -1, true);
-                //minEval = Math.min(minEval, currentEval);
+                const currentEval = this.miniMax(gamestateCopy, king, knights, searchdepth -1, true);
+                
 
                 if (currentEval < minEval){
                     minEval = currentEval;
@@ -37,48 +37,48 @@ class GameAI {
 
         let t1 = performance.now();
         console.log("AI move took " + (t1 - t0) + " milliseconds to calculate.");
+    }
 
-        function miniMax(gameState: GameState, depth: number, maximizingPlayer: boolean){
-            const score = gameState.getScore();
-            if (depth === 0 || score[1]){                   //Als het 1 is dan loose.
-                return score[0];
+    private miniMax(gameState: GameState, king:King, knights: Knight[], depth: number, maximizingPlayer: boolean){
+        const score = gameState.getScore();
+        if (depth === 0 || score[1]){                   //Als het 1 is dan loose.
+            return score[0];
+        }
+
+        //Kingzet
+        if (maximizingPlayer){
+            let maxEval = -Infinity;
+
+            const KingLegalMoves = king.getMoves(gameState.kingPos)                     //Want je hebt nog niks veranderd, je wilt de huidige situatie zien. 
+            
+            for (let move of KingLegalMoves){
+                const gamestateCopy = gameState.copy();
+                gamestateCopy.kingPos = move;
+
+                const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, false);
+                maxEval = Math.max(maxEval, currentEval);
             }
 
-            //Kingzet
-            if (maximizingPlayer){
-                let maxEval = -Infinity;
+            return maxEval;
+        }
 
-                const KingLegalMoves = king.getMoves(gameState.kingPos)                     //Want je hebt nog niks veranderd, je wilt de huidige situatie zien. 
-                
-                for (let move of KingLegalMoves){
+        else {
+            let minEval = Infinity;
+
+            //Voor iedere knight voer je de volgende functie uit
+            knights.forEach((knight, i) => {
+                const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+
+                KnightlegalMoves.forEach((move)=>{
                     const gamestateCopy = gameState.copy();
-                    gamestateCopy.kingPos = move;
+                    gamestateCopy.knightPositions[i] = move;
 
-                    const currentEval = miniMax(gamestateCopy, depth -1, false);
-                    maxEval = Math.max(maxEval, currentEval);
-                }
-
-                return maxEval;
-            }
-
-            else {
-                let minEval = Infinity;
-
-                //Voor iedere knight voer je de volgende functie uit
-                knights.forEach((knight, i) => {
-                    const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
-
-                    KnightlegalMoves.forEach((move)=>{
-                        const gamestateCopy = gameState.copy();
-                        gamestateCopy.knightPositions[i] = move;
-
-                        const currentEval = miniMax(gamestateCopy, depth -1, true);
-                        minEval = Math.min(minEval, currentEval);
-                    })
-                });
-                //console.log("Dit is de minEval: ", minEval);
-                return minEval;
-            }
+                    const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, true);
+                    minEval = Math.min(minEval, currentEval);
+                })
+            });
+            //console.log("Dit is de minEval: ", minEval);
+            return minEval;
         }
     }
 }
