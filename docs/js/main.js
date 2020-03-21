@@ -226,8 +226,15 @@ class GameAI {
         let minEval = Infinity;
         let bestMove = [0, 0];
         let indexKnight = 0;
+        for (let i = 0; i < knights.length; i++) {
+            for (let knight; knight < knights.length; knight++) {
+            }
+        }
         knights.forEach((knight, i) => {
             const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+            console.log("Wat zit er in knightslegalmoves:", KnightlegalMoves);
+            console.log("Wat zit er in knight?", knight);
+            console.log("Wat zit er in i:", i);
             KnightlegalMoves.forEach((move) => {
                 const gamestateCopy = gameState.copy();
                 gamestateCopy.knightPositions[i] = move;
@@ -244,7 +251,7 @@ class GameAI {
         let t1 = performance.now();
         console.log("AI move took " + (t1 - t0) + " milliseconds to calculate.");
     }
-    miniMax(gameState, king, knights, depth, maximizingPlayer) {
+    static miniMax(gameState, king, knights, depth, maximizingPlayer) {
         const score = gameState.getScore();
         if (depth === 0 || score[1]) {
             return score[0];
