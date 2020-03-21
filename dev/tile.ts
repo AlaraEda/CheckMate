@@ -19,7 +19,6 @@ class Tile extends ChessPiece {
         let moves: [number, number][] = []
         return moves;
     }
-
 }
 
 window.customElements.define("tile-component", Tile)

@@ -227,14 +227,7 @@ class GameAI {
         let bestMove = [0, 0];
         let indexKnight = 0;
         for (let i = 0; i < knights.length; i++) {
-            for (let knight; knight < knights.length; knight++) {
-            }
-        }
-        knights.forEach((knight, i) => {
-            const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
-            console.log("Wat zit er in knightslegalmoves:", KnightlegalMoves);
-            console.log("Wat zit er in knight?", knight);
-            console.log("Wat zit er in i:", i);
+            const KnightlegalMoves = knights[i].getMoves(gameState.knightPositions[i]);
             KnightlegalMoves.forEach((move) => {
                 const gamestateCopy = gameState.copy();
                 gamestateCopy.knightPositions[i] = move;
@@ -245,7 +238,7 @@ class GameAI {
                     indexKnight = i;
                 }
             });
-        });
+        }
         knights[indexKnight].setPosition(bestMove);
         gameState.knightPositions[indexKnight] = bestMove;
         let t1 = performance.now();
@@ -269,15 +262,16 @@ class GameAI {
         }
         else {
             let minEval = Infinity;
-            knights.forEach((knight, i) => {
-                const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+            for (let i = 0; i < knights.length; i++) {
+                const KnightlegalMoves = knights[i].getMoves(gameState.knightPositions[i]);
                 KnightlegalMoves.forEach((move) => {
                     const gamestateCopy = gameState.copy();
                     gamestateCopy.knightPositions[i] = move;
                     const currentEval = this.miniMax(gamestateCopy, king, knights, depth - 1, true);
                     minEval = Math.min(minEval, currentEval);
                 });
-            });
+            }
+            ;
             return minEval;
         }
     }

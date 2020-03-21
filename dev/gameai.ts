@@ -12,32 +12,22 @@ class GameAI {
         let bestMove: [number,number] = [0,0];          //Een array met 2 nummers.
         let indexKnight = 0;
         
-        for(let i=0; i<knights.length; i++){
-            for(let knight; knight<knights.length; knight++){
-                
-            }
-        }
-
         //Voor iedere knight voer je de volgende functie uit
-        knights.forEach((knight, i) => {
-            const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
-            console.log("Wat zit er in knightslegalmoves:",KnightlegalMoves);
-            console.log("Wat zit er in knight?", knight);
-            console.log("Wat zit er in i:", i);
+        for(let i=0; i<knights.length; i++){
+            const KnightlegalMoves = knights[i].getMoves(gameState.knightPositions[i]);
             KnightlegalMoves.forEach((move)=>{
                 const gamestateCopy = gameState.copy();
                 gamestateCopy.knightPositions[i] = move;
 
                 const currentEval = this.miniMax(gamestateCopy, king, knights, searchdepth -1, true);
                 
-
                 if (currentEval < minEval){
                     minEval = currentEval;
                     bestMove = move;
                     indexKnight = i;
                 }
             })
-        });
+        }
         
         knights[indexKnight].setPosition(bestMove);
         gameState.knightPositions[indexKnight] = bestMove;
@@ -73,8 +63,8 @@ class GameAI {
             let minEval = Infinity;
 
             //Voor iedere knight voer je de volgende functie uit
-            knights.forEach((knight, i) => {
-                const KnightlegalMoves = knight.getMoves(gameState.knightPositions[i]);
+            for(let i=0; i<knights.length; i++){
+                const KnightlegalMoves = knights[i].getMoves(gameState.knightPositions[i]);
 
                 KnightlegalMoves.forEach((move)=>{
                     const gamestateCopy = gameState.copy();
@@ -83,7 +73,7 @@ class GameAI {
                     const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, true);
                     minEval = Math.min(minEval, currentEval);
                 })
-            });
+            };
             //console.log("Dit is de minEval: ", minEval);
             return minEval;
         }
