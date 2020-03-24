@@ -26,6 +26,8 @@ class GameState {
         // higher number is better for king, lower better for the knights
 
         // Hint: use the position of the king stored in this.kingPos
+        //score0 == 0 & score1 == false
+        //Als paard in de buurt komt, word de return, 100 & true, anders is dit wat de minimax default terug stuurd. 
         return [0, false]                                                       //False Checkt of het gameover is. 
     }
 

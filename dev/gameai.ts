@@ -5,55 +5,60 @@ class GameAI {
     // knight and the gamestate
     
     public static moveKnight(king:King, knights: Knight[], gameState:GameState) {
-        let t0 = performance.now();
+        let t0 = performance.now();                                                                                         //Start tijd van minimax. 
 
         const searchdepth = 3;
-        let minEval = Infinity;
-        let bestMove: [number,number] = [0,0];          //Een array met 2 nummers.
+        let minEval = +Infinity;
+        let bestMove: [number,number] = [0,0];                                                                              //Een array met 2 nummers.
         let indexKnight = 0;
         
-        //Voor iedere knight voer je de volgende functie uit
+        //Loop voor iedere Knight. 
         for(let i=0; i<knights.length; i++){
-            const KnightlegalMoves = knights[i].getMoves(gameState.knightPositions[i]);
-            KnightlegalMoves.forEach((move)=>{
-                const gamestateCopy = gameState.copy();
-                gamestateCopy.knightPositions[i] = move;
+            const KnightlegalMoves = knights[i].getMoves(gameState.knightPositions[i]);                                     //De legale moves die de knight op de momentele positie kan maken. 
 
-                const currentEval = this.miniMax(gamestateCopy, king, knights, searchdepth -1, true);
-                
-                if (currentEval < minEval){
-                    minEval = currentEval;
-                    bestMove = move;
-                    indexKnight = i;
+            for(let move of KnightlegalMoves){                                                                              //Loop door alle moves van de gekozen knight heen. 
+                const gamestateCopy = gameState.copy();                                                                     //Maak een nep kopie van de gameState (zodat je alle moves niet in het echt doet)
+                gamestateCopy.knightPositions[i] = move;                                                                    //Voer de gekoze move uit op de gekoze knight in de nep-gamestate.
+
+                const Eval = this.miniMax(gamestateCopy, king, knights, searchdepth -1, true);                              //Neem de gekoze positie mee naar de minimax. 
+                                                                                                                            //Currenteval is altijd nul als je loopt of als je verliest. 
+                //Als gereturnde cijfer kleiner is dan +Infinity
+                if (Eval < minEval){
+                    minEval = Eval;                                                                                         //De waarde van Infinity veranderd naar de berekende cijfer van de minimax
+                    bestMove = move;                                                                                        //De nieuwe bestMove krijgt de waarde van de move met het hoogste cijfer.
+                    indexKnight = i;                                                                                        //De indexKnight krijgt de waarde van de beste knight. 
                 }
-            })
+            }
         }
         
-        knights[indexKnight].setPosition(bestMove);
-        gameState.knightPositions[indexKnight] = bestMove;
+        //Play the best chosen move
+        knights[indexKnight].setPosition(bestMove);                                                                        //Zet de positie van de knight met de bestemove. 
+        gameState.knightPositions[indexKnight] = bestMove;                                                                 //Update de gamestate, zodat die weet wat de laatst gedaande move was.                  
 
+        //Hou bij hoelang het berekenen duurde
         let t1 = performance.now();
         console.log("AI move took " + (t1 - t0) + " milliseconds to calculate.");
     }
 
     public static miniMax(gameState: GameState, king:King, knights: Knight[], depth: number, maximizingPlayer: boolean){
         const score = gameState.getScore();
-        if (depth === 0 || score[1]){                   //Als het 1 is dan loose.
-            return score[0];
+        if (depth === 0 || score[1]){                                                                                       //Als het 1 is dan.... 
+            console.log("score1", score[1]);
+            console.log("score0", score[0]);
+            return score[0];                                                                                                //betekend... 
         }
 
         //Kingzet
         if (maximizingPlayer){
             let maxEval = -Infinity;
-
-            const KingLegalMoves = king.getMoves(gameState.kingPos)                     //Want je hebt nog niks veranderd, je wilt de huidige situatie zien. 
+            const gamestateCopy = gameState.copy(); 
+            const KingLegalMoves = king.getMoves(gamestateCopy.kingPos)                                                     //Haal de huidige situatie van je King op (welke moves kan die? )
             
-            for (let move of KingLegalMoves){
-                const gamestateCopy = gameState.copy();
-                gamestateCopy.kingPos = move;
+            for (let move of KingLegalMoves){                                                                               //Loop door alle huidige moves van de king heen.         
+                gamestateCopy.kingPos = move;                                                                               //Doe alsof je de move uitvoerd. 
 
-                const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, false);
-                maxEval = Math.max(maxEval, currentEval);
+                const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, false);                            //?
+                maxEval = Math.max(maxEval, currentEval);                                                                   //Kies de hoogste nummer
             }
 
             return maxEval;
@@ -62,19 +67,17 @@ class GameAI {
         else {
             let minEval = Infinity;
 
-            //Voor iedere knight voer je de volgende functie uit
             for(let i=0; i<knights.length; i++){
-                const KnightlegalMoves = knights[i].getMoves(gameState.knightPositions[i]);
+                const gamestateCopy = gameState.copy();
+                const KnightlegalMoves = knights[i].getMoves(gamestateCopy.knightPositions[i]);                             //Alle moves die de knight in de copy van de gameState kan maken. 
 
-                KnightlegalMoves.forEach((move)=>{
-                    const gamestateCopy = gameState.copy();
-                    gamestateCopy.knightPositions[i] = move;
+                for(let move of KnightlegalMoves){                                                                          //Loop door alle moves van die 1ne knight heen.
+                    gamestateCopy.knightPositions[i] = move;                                                                //Doe alsof je die move uitvoerd. 
 
-                    const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, true);
-                    minEval = Math.min(minEval, currentEval);
-                })
+                    const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, true);                         //?
+                    minEval = Math.min(minEval, currentEval);                                                               //Kies de laagste nummer
+                }
             };
-            //console.log("Dit is de minEval: ", minEval);
             return minEval;
         }
     }
