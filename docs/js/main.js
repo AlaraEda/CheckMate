@@ -223,7 +223,7 @@ class GameAI {
     static moveKnight(king, knights, gameState) {
         let t0 = performance.now();
         const searchdepth = 3;
-        let minEval = +Infinity;
+        let minEval = Infinity;
         let bestMove = [0, 0];
         let indexKnight = 0;
         for (let i = 0; i < knights.length; i++) {
@@ -231,7 +231,7 @@ class GameAI {
             for (let move of KnightlegalMoves) {
                 const gamestateCopy = gameState.copy();
                 gamestateCopy.knightPositions[i] = move;
-                const Eval = this.miniMax(gamestateCopy, king, knights, searchdepth - 1, true);
+                const Eval = this.miniMax(gamestateCopy, king, knights, searchdepth - 1, false);
                 if (Eval < minEval) {
                     minEval = Eval;
                     bestMove = move;
@@ -248,7 +248,6 @@ class GameAI {
         const score = gameState.getScore();
         if (depth === 0 || score[1]) {
             console.log("score1", score[1]);
-            console.log("score0", score[0]);
             return score[0];
         }
         if (maximizingPlayer) {

@@ -8,7 +8,7 @@ class GameAI {
         let t0 = performance.now();                                                                                         //Start tijd van minimax. 
 
         const searchdepth = 3;
-        let minEval = +Infinity;
+        let minEval = Infinity;
         let bestMove: [number,number] = [0,0];                                                                              //Een array met 2 nummers.
         let indexKnight = 0;
         
@@ -20,7 +20,7 @@ class GameAI {
                 const gamestateCopy = gameState.copy();                                                                     //Maak een nep kopie van de gameState (zodat je alle moves niet in het echt doet)
                 gamestateCopy.knightPositions[i] = move;                                                                    //Voer de gekoze move uit op de gekoze knight in de nep-gamestate.
 
-                const Eval = this.miniMax(gamestateCopy, king, knights, searchdepth -1, true);                              //Neem de gekoze positie mee naar de minimax. 
+                const Eval = this.miniMax(gamestateCopy, king, knights, searchdepth -1, false);                              //Neem de gekoze positie mee naar de minimax. 
                                                                                                                             //Currenteval is altijd nul als je loopt of als je verliest. 
                 //Als gereturnde cijfer kleiner is dan +Infinity
                 if (Eval < minEval){
@@ -42,10 +42,12 @@ class GameAI {
 
     public static miniMax(gameState: GameState, king:King, knights: Knight[], depth: number, maximizingPlayer: boolean){
         const score = gameState.getScore();
-        if (depth === 0 || score[1]){                                                                                       //Als het 1 is dan.... 
+
+        //Als dept 0 is of als score false is;
+        if (depth === 0 || score[1]){                                                                                       //Als het 1 is dan returned die de boolean "false" of "true" 
             console.log("score1", score[1]);
-            console.log("score0", score[0]);
-            return score[0];                                                                                                //betekend... 
+            // console.log("score0", score[0]);
+            return score[0];                                                                                                //Als het 0 is dan returnd die de eerste score in zijn array
         }
 
         //Kingzet
@@ -57,7 +59,7 @@ class GameAI {
             for (let move of KingLegalMoves){                                                                               //Loop door alle huidige moves van de king heen.         
                 gamestateCopy.kingPos = move;                                                                               //Doe alsof je de move uitvoerd. 
 
-                const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, false);                            //?
+                const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, false);                            //0, -100, 100
                 maxEval = Math.max(maxEval, currentEval);                                                                   //Kies de hoogste nummer
             }
 
@@ -74,7 +76,7 @@ class GameAI {
                 for(let move of KnightlegalMoves){                                                                          //Loop door alle moves van die 1ne knight heen.
                     gamestateCopy.knightPositions[i] = move;                                                                //Doe alsof je die move uitvoerd. 
 
-                    const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, true);                         //?
+                    const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, true);                         //0, -100 (of 100?)
                     minEval = Math.min(minEval, currentEval);                                                               //Kies de laagste nummer
                 }
             };

@@ -10,14 +10,14 @@ class GameState {
     // return the value of the state and if the state is terminal (game over)
     // higher value is better gamestate for the king (100 is win, -100 is lose)
     public getScore() : [number, boolean] {
-        // game over
+        //Game over, als knight op de positie van een King kan gaan staan. 
         for (let z of this.knightPositions) {
             if (Board.samePosition(z, this.kingPos)) {
                 return [-100, true];
             }
         }
 
-        // win
+        //Win voor de koning
         if (this.kingPos[1] == 0) {
             return[100, true];
         } 
