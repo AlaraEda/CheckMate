@@ -44,7 +44,7 @@ class GameAI {
         const score = gameState.getScore();
 
         //Als dept 0 is of als score false is;
-        if (depth === 0 || score[1]){                                                                                       //Als het 1 is dan returned die de boolean "false" of "true" 
+        if (depth === 0 || score[1]){                                                                                       //Als het 1 is dan returned die de boolean "false" of "true", is het spel over in de current positie?
             return score[0];                                                                                                //Als het 0 is dan returnd die de eerste score in zijn array
         }
 
@@ -54,7 +54,7 @@ class GameAI {
             const gamestateCopy = gameState.copy(); 
             const KingLegalMoves = king.getMoves(gamestateCopy.kingPos)                                                     //Haal de huidige situatie van je King op (welke moves kan die? )
             
-            for (let move of KingLegalMoves){                                                                               //Loop door alle huidige moves van de king heen.         
+            for (let move of KingLegalMoves){                                                                               //Loop door alle posities die je kan halen binnen 1 king move.         
                 gamestateCopy.kingPos = move;                                                                               //Doe alsof je de move uitvoerd. 
 
                 const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, false);                            //0, -100, 100

@@ -38,7 +38,8 @@ class GameState {
         // Hint: use the position of the king stored in this.kingPos
         //score0 == 0 & score1 == false
         //Als paard in de buurt komt, word de return, 100 & true, anders is dit wat de minimax default terug stuurd. 
-        return [0, false]                                                       //False Checkt of het gameover is. 
+        //return [-this.kingPos, false]                                                       //False Checkt of het gameover is. 
+        return [0 , false]
     }
 
     // create a copy of the gamestate (needed by AI to look into the future)
