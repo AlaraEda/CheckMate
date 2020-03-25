@@ -83,6 +83,8 @@ class Game {
 
                     // check win
                     if (this.gameState.getScore()[1]) {
+                        console.log("wat is dit", this.gameState.getScore()[1]);
+                        console.log("You Won!");
                         this.gameOver = true;
                     }
                 }
