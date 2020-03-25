@@ -36,12 +36,12 @@ chicken-component {
 
 knight-component {
 	width:342px; min-height:600px;
-	background-image: url('../images/knight.png');
+	background-image: url('../images/zwieber.png');
 }
 
 king-component {
     width:178px; height:387px;
-    background-image: url('../images/king.png');
+    background-image: url('../images/dora.png');
 }
 
 tile-component {

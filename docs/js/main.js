@@ -175,6 +175,8 @@ class Game {
                     this.gameState.kingPos = boardPos;
                     this.playerTurn = false;
                     if (this.gameState.getScore()[1]) {
+                        console.log("wat is dit", this.gameState.getScore()[1]);
+                        console.log("You Won!");
                         this.gameOver = true;
                     }
                 }
@@ -223,7 +225,7 @@ class GameAI {
     static moveKnight(king, knights, gameState) {
         let t0 = performance.now();
         const searchdepth = 3;
-        let minEval = Infinity;
+        let minEval = +Infinity;
         let bestMove = [0, 0];
         let indexKnight = 0;
         for (let i = 0; i < knights.length; i++) {
@@ -247,7 +249,6 @@ class GameAI {
     static miniMax(gameState, king, knights, depth, maximizingPlayer) {
         const score = gameState.getScore();
         if (depth === 0 || score[1]) {
-            console.log("score1", score[1]);
             return score[0];
         }
         if (maximizingPlayer) {
