@@ -4,6 +4,10 @@ Startercode in Typescript voor de opdracht AI in Games.
 
 Lees de lesbrief voor verdere instructies.
 
+Installeren:
+Ctrl + Shift + B --> tsc:watch - tsconfig.json
+Lifeserver
+
 Minimax Uitlegende video:
 https://www.youtube.com/watch?v=trKjYdBASyQ
 
