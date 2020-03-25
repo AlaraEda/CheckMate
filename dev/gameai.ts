@@ -63,6 +63,7 @@ class GameAI {
             return maxEval;
         }
 
+        //Knight
         else {
             let minEval = Infinity;
 
