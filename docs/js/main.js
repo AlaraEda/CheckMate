@@ -121,7 +121,16 @@ class GameState {
         if (this.kingPos[1] == 0) {
             return [100, true];
         }
-        return [0, false];
+        let distance = 50;
+        this.knightPositions.forEach((knightPos) => {
+            const dx = Math.abs(this.kingPos[0] - knightPos[0]);
+            const dy = Math.abs(this.kingPos[1] - knightPos[1]);
+            const delta = dx + dy;
+            if (delta < distance && delta > 1)
+                distance = delta;
+        });
+        const score = -50 / distance;
+        return [score, false];
     }
     copy() {
         const knightPosCopy = Object.assign([], this.knightPositions);

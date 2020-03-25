@@ -22,15 +22,15 @@ class GameState {
             return[100, true];
         } 
 
-        // let distance = 50;
-        // this.knightPositions.forEach((knightPos) => {
-        //     const dx= Math.abs(this.kingPos[0] - knightPos[0]);
-        //     const dy = Math.abs(this.kingPos[1] - knightPos[1]);
-        //     const delta = dx + dy;
+        let distance = 50;
+        this.knightPositions.forEach((knightPos) => {
+            const dx= Math.abs(this.kingPos[0] - knightPos[0]);
+            const dy = Math.abs(this.kingPos[1] - knightPos[1]);
+            const delta = dx + dy;
 
-        //     if (delta < distance && delta > 1) distance = delta;
-        // });
-        // const score = -50 / distance;
+            if (delta < distance && delta > 1) distance = delta;
+        });
+        const score = -50 / distance;
 
         // not over yet, return an evaluation of the gamestate
         // higher number is better for king, lower better for the knights
@@ -40,7 +40,7 @@ class GameState {
         //Als paard in de buurt komt, word de return, 100 & true, anders is dit wat de minimax default terug stuurd. 
         //return [-this.kingPos, false]                                                       //False Checkt of het gameover is. 
         //console.log(this.kingPos);
-        return [0 , false]
+        return [score , false]
     }
 
     // create a copy of the gamestate (needed by AI to look into the future)
