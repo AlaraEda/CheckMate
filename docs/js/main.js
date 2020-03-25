@@ -120,7 +120,7 @@ class GameState {
         if (this.kingPos[1] == 0) {
             return [100, true];
         }
-        return [0, false];
+        return [-this.kingPos[1], false];
     }
     copy() {
         const knightPosCopy = Object.assign([], this.knightPositions);
@@ -225,9 +225,9 @@ class GameAI {
         console.log(king);
         console.log(knights);
         console.log(gameState);
-        this.miniMax(knights, 2, true);
+        this.miniMax(knights, king, 2, true);
     }
-    miniMax(knights, depth, maximizingPlayer) {
+    miniMax(knights, king, King, depth, maximizingPlayer) {
         let legalMoves = knights[0].getMoves();
         if (depth == 0) {
             console.log("Dept is zero now");
