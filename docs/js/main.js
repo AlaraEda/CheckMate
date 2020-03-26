@@ -121,16 +121,7 @@ class GameState {
         if (this.kingPos[1] == 0) {
             return [100, true];
         }
-        let distance = 50;
-        this.knightPositions.forEach((knightPos) => {
-            const dx = Math.abs(this.kingPos[0] - knightPos[0]);
-            const dy = Math.abs(this.kingPos[1] - knightPos[1]);
-            const delta = dx + dy;
-            if (delta < distance && delta > 1)
-                distance = delta;
-        });
-        const score = -50 / distance;
-        return [score, false];
+        return [0, false];
     }
     copy() {
         const knightPosCopy = Object.assign([], this.knightPositions);
@@ -233,7 +224,7 @@ window.customElements.define("knight-component", Knight);
 class GameAI {
     static moveKnight(king, knights, gameState) {
         let t0 = performance.now();
-        const searchdepth = 3;
+        const searchdepth = 5;
         let minEval = +Infinity;
         let bestMove = [0, 0];
         let indexKnight = 0;

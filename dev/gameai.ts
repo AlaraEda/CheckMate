@@ -7,7 +7,7 @@ class GameAI {
     public static moveKnight(king:King, knights: Knight[], gameState:GameState) {
         let t0 = performance.now();                                                                                         //Start tijd van minimax. 
 
-        const searchdepth = 3;
+        const searchdepth = 5;
         let minEval = +Infinity;
         let bestMove: [number,number] = [0,0];                                                                              //Een array met 2 nummers.
         let indexKnight = 0;
