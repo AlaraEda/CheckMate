@@ -1,10 +1,18 @@
 # CMTPRG01-9: AI in Games
 
 **Installeren:**
+Installeer eerst NPM. Dit kan je doen via: "nodejs.org/en".
+Hierbij heb ik versie "14.16.0LTS" gebruikt. Maar de nieuwste versie is natuurlijk het beste. 
 
-Ctrl + Shift + B --> tsc:watch - tsconfig.json
+Restart je laptop
+
+Installeer nu Typescript. Dit doe je door in je terminal "npm install -g typescript" te typen. 
+
+Doe daarna: "Set-ExecutionPolicy RemoteSigned"
 
 Lifeserver
+
+Ctrl + Shift + B --> tsc:watch - tsconfig.json
 
 Pdf met de opdracht staat in de repo. 
 
