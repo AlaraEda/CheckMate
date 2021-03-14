@@ -121,7 +121,7 @@ class GameState {
         if (this.kingPos[1] == 0) {
             return [100, true];
         }
-        return [0, false];
+        return [this.kingPos[0], false];
     }
     copy() {
         const knightPosCopy = Object.assign([], this.knightPositions);
@@ -251,18 +251,7 @@ class GameAI {
         if (depth === 0 || score[1]) {
             return score[0];
         }
-        if (maximizingPlayer) {
-            let maxEval = -Infinity;
-            const gamestateCopy = gameState.copy();
-            const KingLegalMoves = king.getMoves(gamestateCopy.kingPos);
-            for (let move of KingLegalMoves) {
-                gamestateCopy.kingPos = move;
-                const currentEval = this.miniMax(gamestateCopy, king, knights, depth - 1, false);
-                maxEval = Math.max(maxEval, currentEval);
-            }
-            return maxEval;
-        }
-        else {
+        if (!maximizingPlayer) {
             let minEval = Infinity;
             for (let i = 0; i < knights.length; i++) {
                 const gamestateCopy = gameState.copy();
@@ -275,6 +264,17 @@ class GameAI {
             }
             ;
             return minEval;
+        }
+        else {
+            let maxEval = -Infinity;
+            const gamestateCopy = gameState.copy();
+            const KingLegalMoves = king.getMoves(gamestateCopy.kingPos);
+            for (let move of KingLegalMoves) {
+                gamestateCopy.kingPos = move;
+                const currentEval = this.miniMax(gamestateCopy, king, knights, depth - 1, false);
+                maxEval = Math.max(maxEval, currentEval);
+            }
+            return maxEval;
         }
     }
 }

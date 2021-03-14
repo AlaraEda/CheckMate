@@ -49,22 +49,7 @@ class GameAI {
         }
 
         //Kingzet
-        if (maximizingPlayer){
-            let maxEval = -Infinity;
-            const gamestateCopy = gameState.copy(); 
-            const KingLegalMoves = king.getMoves(gamestateCopy.kingPos)                                                     //Haal de huidige situatie van je King op (welke moves kan die? )
-            
-            for (let move of KingLegalMoves){                                                                               //Loop door alle posities die je kan halen binnen 1 king move.         
-                gamestateCopy.kingPos = move;                                                                               //Doe alsof je de move uitvoerd. 
-
-                const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, false);                            //0, -100, 100
-                maxEval = Math.max(maxEval, currentEval);                                                                   //Kies de hoogste nummer
-            }
-            return maxEval;
-        }
-
-        //Knight
-        else {
+        if (!maximizingPlayer){
             let minEval = Infinity;
 
             for(let i=0; i<knights.length; i++){
@@ -79,6 +64,21 @@ class GameAI {
                 }
             };
             return minEval;
+        }
+
+        //Knight
+        else {
+            let maxEval = -Infinity;
+            const gamestateCopy = gameState.copy(); 
+            const KingLegalMoves = king.getMoves(gamestateCopy.kingPos)                                                     //Haal de huidige situatie van je King op (welke moves kan die? )
+            
+            for (let move of KingLegalMoves){                                                                               //Loop door alle posities die je kan halen binnen 1 king move.         
+                gamestateCopy.kingPos = move;                                                                               //Doe alsof je de move uitvoerd. 
+
+                const currentEval = this.miniMax(gamestateCopy, king, knights, depth -1, false);                            //0, -100, 100
+                maxEval = Math.max(maxEval, currentEval);                                                                   //Kies de hoogste nummer
+            }
+            return maxEval;
         }
     }
 }
